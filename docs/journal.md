@@ -136,3 +136,23 @@ n'en ont pas : la page les traite comme des photos sans légende, rien à migrer
 Vérifié avant copie, côté CRM : `tests/site.test.mjs`, 22 contrôles, 0 échec, dont
 l'affichage de la légende sous la photo, en plein écran, son absence quand il n'y en
 a pas, et l'absence de toute clé d'accès dans la page servie.
+
+---
+
+## 2026-09-04, 20h10 UTC — Vérification après coup : le miroir a bien fonctionné
+
+Relance nocturne, rien à développer ici (voir le constat plus haut). Contrôles faits :
+
+- Le constat est bien versionné sur `main` et a servi : la session qui a copié les
+  légendes depuis le CRM (`51f52b0`) a suivi le rôle de miroir décrit ici, sans
+  écrire de code propre à ce dépôt.
+- **L'étape `rm -rf docs` a survécu à cette copie** — c'était le risque signalé plus
+  haut. Vérifié sur `origin/main` et en ligne : `…/docs/journal.md` renvoie HTTP 404,
+  le journal n'est pas servi au public.
+- Déploiements Pages n°2 (`a274e93`) et n°3 (`51f52b0`) : **succès** tous les deux.
+- Page publique : HTTP 200, 11 876 octets, identique octet pour octet à `origin/main`.
+  Les légendes sont bien en ligne.
+
+Rien d'autre à faire dans ce dépôt tant que la question « où vit le code du site »
+n'est pas tranchée par Raphaël (voir plus haut). Les relances suivantes n'auront rien
+à y faire non plus.
