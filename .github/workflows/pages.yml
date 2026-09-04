@@ -29,6 +29,10 @@ jobs:
           # Active GitHub Pages tout seul au premier déploiement : aucune case à cocher
           # à aller chercher dans les réglages du dépôt.
           enablement: true
+      # Le journal de ce dépôt est une note de travail interne : il ne doit pas être
+      # servi sur le site public de Mélissa. On le retire de l'artefact publié.
+      - name: Exclure le journal interne
+        run: rm -rf docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
