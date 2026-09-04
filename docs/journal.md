@@ -115,3 +115,24 @@ peuvent donc pas se faire d'ici seul.
 Rien de développé ici, volontairement — voir plus haut. Ajouté : ce journal, et
 l'étape `rm -rf docs` du workflow pour ne pas le publier. Le site en ligne est
 inchangé côté visiteur : vérifié après déploiement.
+
+---
+
+## 2026-09-04 — Légendes de photos (copie depuis le CRM)
+
+Copie de `site-vitrine/index.html` du dépôt CRM, comme le veut le rôle de miroir
+décrit plus haut. **Rien n'a été écrit ici** : le fichier est identique octet pour
+octet à sa source (vérifié par `diff` après copie).
+
+**Ce qui change pour le visiteur** : une photo peut porter une légende, écrite depuis
+le CRM (fiche d'une réalisation → pied d'une vignette → « Titre et légende »). La
+légende s'affiche sous la photo dans la page du projet, reprise en plein écran, et
+sert de texte alternatif. Une photo sans légende n'affiche rien du tout — pas de
+blanc sous l'image.
+
+Le manifeste porte la légende dans `photos[].caption`. Les manifestes déjà publiés
+n'en ont pas : la page les traite comme des photos sans légende, rien à migrer.
+
+Vérifié avant copie, côté CRM : `tests/site.test.mjs`, 22 contrôles, 0 échec, dont
+l'affichage de la légende sous la photo, en plein écran, son absence quand il n'y en
+a pas, et l'absence de toute clé d'accès dans la page servie.
