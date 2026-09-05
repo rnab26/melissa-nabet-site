@@ -156,3 +156,27 @@ Relance nocturne, rien à développer ici (voir le constat plus haut). Contrôle
 Rien d'autre à faire dans ce dépôt tant que la question « où vit le code du site »
 n'est pas tranchée par Raphaël (voir plus haut). Les relances suivantes n'auront rien
 à y faire non plus.
+
+---
+
+## 2026-09-05 — Textes de présentation des projets (copie depuis le CRM)
+
+Copie de `site-vitrine/index.html` du dépôt CRM, identique octet pour octet à sa
+source (vérifié par `diff` après copie). Rien n'a été écrit ici.
+
+**Ce qui change pour le visiteur** : sous le titre d'un projet s'affichent
+maintenant l'année, le lieu, la surface et le type de mission quand ils sont
+renseignés, puis un texte de présentation. Tous ces champs se remplissent depuis
+le CRM (fiche d'une réalisation). Un champ vide ne s'affiche pas du tout — pas
+d'étiquette sans valeur, pas de ligne vide.
+
+Sur la liste des projets, la carte porte désormais l'année, le lieu et le type de
+mission plutôt qu'un décompte de photos ; s'il n'y a ni lieu ni mission, on
+retombe sur le décompte pour ne pas laisser une ligne quasi vide.
+
+Les manifestes déjà publiés n'ont aucun de ces champs : la page les traite comme
+absents, rien à migrer.
+
+Vérifié avant copie, côté CRM : `tests/site.test.mjs`, 24 contrôles, 0 échec,
+dont l'affichage des informations sous le titre, le texte de présentation, et
+toujours l'absence de toute clé d'accès dans la page servie.
