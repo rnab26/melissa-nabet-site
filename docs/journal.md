@@ -205,3 +205,19 @@ Si le chemin de l'image d'aperçu change côté CRM (`shareImagePath`), la balis
 `og:image` de cette page doit changer en même temps.
 
 Vérifié avant copie : `tests/site.test.mjs`, 36 contrôles, 0 échec.
+
+---
+
+## 2026-09-05 — Filtre par catégorie (copie depuis le CRM)
+
+Copie de `site-vitrine/index.html` du dépôt CRM, identique octet pour octet.
+
+**Ce qui change pour le visiteur** : une barre de filtres au-dessus de la grille,
+avec le décompte par catégorie (« Appartement (4) », « Bureau (2) »…). Elle se
+construit à partir des projets réellement publiés — rien à tenir à jour — et ne
+s'affiche pas tant qu'il n'y a pas au moins deux catégories. La catégorie se
+renseigne depuis le CRM, dans la fiche de la réalisation.
+
+Vérifié avant copie : `tests/site.test.mjs`, 42 contrôles, 0 échec, dont l'ouverture
+d'un projet depuis une liste filtrée (le piège classique : ouvrir celui du même rang
+dans la liste complète).
