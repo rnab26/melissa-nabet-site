@@ -290,3 +290,27 @@ exécution a rattrapé ce retard toute seule.
 - La branche `claude/constat-depot-miroir`, déjà fusionnée, n'a pas pu être supprimée :
   le proxy git de la session refuse la suppression de branche et le connecteur GitHub
   n'expose pas d'outil pour ça. Sans conséquence, juste pas net.
+
+---
+
+## 2026-09-05, 18h15 — Le jeton n'expire pas (correction) et le domaine est écarté
+
+**Correction de l'entrée précédente.** J'y avais noté l'expiration du jeton comme le
+point de fragilité restant. Raphaël l'a créé **sans date d'expiration**. Vérifié, pas
+déduit : un secret ne se relit pas, donc c'est le workflow lui-même — le seul à détenir
+le jeton — qui a posé la question à GitHub. Réponse, dans le journal d'exécution du
+run 33983347113 : « Jeton valide, sans date d'expiration : la recopie ne s'arrêtera pas
+d'elle-même. »
+
+Le workflow de recopie affiche désormais à chaque exécution si le jeton est valide et
+jusqu'à quand, et prévient quinze jours avant l'échéance s'il en a une un jour. Un jeton
+refusé (révoqué, mal recollé) arrête maintenant le workflow avec un message clair au lieu
+d'échouer plus loin sur une erreur d'authentification illisible. Rien du jeton n'est
+affiché : seuls le code de réponse et l'en-tête de date sortent dans le journal.
+
+**Nom de domaine propre (`si06`)** : écarté par Raphaël — « je m'en fous, je n'ai pas
+besoin maintenant ». C'est une décision, pas un oubli : ne pas la relancer sans qu'il la
+rouvre. Le site reste sur son adresse `github.io`.
+
+**Il ne reste donc rien à surveiller sur la chaîne de publication.** Trois exécutions,
+trois succès ; le journal a survécu à chacune et n'est jamais publié.
