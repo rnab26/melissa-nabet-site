@@ -221,3 +221,24 @@ renseigne depuis le CRM, dans la fiche de la réalisation.
 Vérifié avant copie : `tests/site.test.mjs`, 42 contrôles, 0 échec, dont l'ouverture
 d'un projet depuis une liste filtrée (le piège classique : ouvrir celui du même rang
 dans la liste complète).
+
+---
+
+## 2026-09-05 — À propos et contact (copie depuis le CRM)
+
+Copie de `site-vitrine/index.html` du dépôt CRM, identique octet pour octet.
+
+**Ce qui change pour le visiteur** : une section « À propos » en bas de page, avec
+le texte de présentation et les liens pour joindre l'architecte — e-mail, WhatsApp
+(numéro converti au format international) et Instagram.
+
+**Rien n'est affiché tant que rien n'est rempli** : chaque lien manquant disparaît,
+et si tout est vide la section n'existe pas du tout. Ces informations se saisissent
+dans le CRM (onglet Réalisations → « ⚙ Le site public ») puis s'envoient par un
+bouton explicite. Aucune coordonnée n'est reprise automatiquement des devis.
+
+L'adresse e-mail n'est pas écrite dans le HTML servi : le lien est fabriqué au
+chargement à partir du manifeste. Ça décourage les robots collecteurs ordinaires,
+ça ne rend pas l'adresse secrète — le manifeste est public.
+
+Vérifié avant copie : `tests/site.test.mjs`, 49 contrôles, 0 échec.
