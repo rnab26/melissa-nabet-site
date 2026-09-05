@@ -242,3 +242,51 @@ chargement à partir du manifeste. Ça décourage les robots collecteurs ordinai
 ça ne rend pas l'adresse secrète — le manifeste est public.
 
 Vérifié avant copie : `tests/site.test.mjs`, 49 contrôles, 0 échec.
+
+---
+
+## 2026-09-05, 18h — La recopie devient automatique (la question ouverte est tranchée)
+
+Raphaël a tranché : **le CRM reste la source, la recopie est désormais automatique.**
+Il a créé le jeton d'écriture et l'a déposé dans le secret `SITE_VITRINE_TOKEN` du dépôt
+du CRM. Le workflow `.github/workflows/sync-site-vitrine.yml` (côté CRM) recopie
+`site-vitrine/` ici à chaque changement sur `main`.
+
+**Ce dépôt ne se modifie plus à la main. Jamais.** Toute modification du site se fait
+dans `site-vitrine/` du dépôt CRM ; la recopie suivante écraserait ce qui aurait été
+écrit ici.
+
+**Deux exceptions, qui appartiennent à ce dépôt et ne sont jamais écrasées :**
+- `.github/` — le déploiement Pages d'ici, avec son garde-fou `rm -rf docs`.
+- `docs/` — ce journal.
+
+C'est un `rsync --delete` avec ces deux dossiers en exclusion : rsync protège de la
+suppression ce qu'il exclut. Le jeton n'a volontairement **pas** le droit d'écrire des
+workflows, donc même une erreur de configuration ne peut pas emporter le garde-fou.
+
+**Vérifié en conditions réelles, pas déduit** (première exécution, run 33982469799) :
+- Le workflow a poussé ici tout seul : commit `c2e4607` par `github-actions[bot]`.
+- `index.html` est identique octet pour octet à `site-vitrine/index.html` du CRM.
+- Deux fichiers nouveaux sont bien arrivés : `sitemap.xml` et `robots.txt` (HTTP 200 en ligne).
+- `docs/journal.md` a survécu à la recopie, et reste non publié (HTTP 404 en ligne).
+- Le garde-fou `rm -rf docs` est toujours dans `.github/workflows/pages.yml`.
+- Le site public répond HTTP 200 avec la nouvelle version.
+
+Ce que ça règle : ce dépôt avait pris du retard sur le CRM (catégories, filtre,
+référencement, sitemap étaient déjà écrits côté source mais pas recopiés). La première
+exécution a rattrapé ce retard toute seule.
+
+**Ne pas casser**
+- Ne pas retirer les exclusions `--exclude='.github/'` et `--exclude='docs/'` du workflow
+  de recopie : sans elles, le journal serait publié sur le site public et le garde-fou
+  sauterait.
+- Ne pas travailler dans ce dépôt. La source est `site-vitrine/` du CRM.
+
+**Ce qui reste à surveiller**
+- **Le jeton a une date d'expiration.** Le jour où il expire, la recopie s'arrête. Le
+  workflow échoue alors avec un message explicite (« Le secret SITE_VITRINE_TOKEN est
+  absent ») plutôt qu'en silence — mais il faudra le régénérer et le recoller dans le
+  secret du dépôt CRM. Aucune alerte automatique n'est en place pour prévenir avant.
+- La branche `claude/constat-depot-miroir`, déjà fusionnée, n'a pas pu être supprimée :
+  le proxy git de la session refuse la suppression de branche et le connecteur GitHub
+  n'expose pas d'outil pour ça. Sans conséquence, juste pas net.
