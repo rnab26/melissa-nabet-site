@@ -180,3 +180,28 @@ absents, rien à migrer.
 Vérifié avant copie, côté CRM : `tests/site.test.mjs`, 24 contrôles, 0 échec,
 dont l'affichage des informations sous le titre, le texte de présentation, et
 toujours l'absence de toute clé d'accès dans la page servie.
+
+---
+
+## 2026-09-05 — Aperçu de partage, référencement, chargement (copie depuis le CRM)
+
+Copie de `site-vitrine/` du dépôt CRM : `index.html` (identique octet pour octet,
+vérifié par `diff`), plus deux fichiers nouveaux, `robots.txt` et `sitemap.xml`.
+
+**Ce qui change** : un lien vers le site partagé sur WhatsApp, Instagram ou
+LinkedIn affiche désormais une image et une description. Les robots de ces
+services ne lisent pas le JavaScript : l'image est donc déclarée en dur dans la
+page, à une adresse fixe que **le CRM réécrit à chaque publication** (couverture
+de la dernière réalisation publiée) et efface quand plus rien n'est en ligne.
+
+Le titre de l'onglet et la description suivent le projet ouvert, puis reviennent à
+ceux du site quand on referme. Adresse canonique, données structurées schema.org,
+robots.txt et sitemap.xml ajoutés.
+
+Chargement : les vignettes au-delà des deux premières attendent d'être approchées,
+décodage hors du fil principal, priorité haute sur la première photo d'un projet.
+
+Si le chemin de l'image d'aperçu change côté CRM (`shareImagePath`), la balise
+`og:image` de cette page doit changer en même temps.
+
+Vérifié avant copie : `tests/site.test.mjs`, 36 contrôles, 0 échec.
